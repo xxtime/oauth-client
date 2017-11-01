@@ -1,0 +1,15 @@
+{
+  "name": "xxtime/oauth-client",
+  "type": "library",
+  "description": "oauth2.0 client",
+  "homepage": "https://github.com/xxtime",
+  "require": {
+    "php": ">=5.5",
+    "xxtime/curl-utils": "dev-master"
+  },
+  "autoload": {
+    "psr-4": {
+      "Xxtime\\Oauth\\": "src/"
+    }
+  }
+}
