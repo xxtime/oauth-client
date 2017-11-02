@@ -69,6 +69,12 @@ class Google extends ProviderAbstract
         }
 
 
+        // check sub
+        if ($payload['sub'] != $id) {
+            throw new DefaultException('id error');
+        }
+
+
         // check iss
         if (strpos($payload['iss'], 'accounts.google.com') === false) {
             throw new DefaultException('iss error');
