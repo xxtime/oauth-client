@@ -38,6 +38,7 @@ class Facebook extends ProviderAbstract
     public function __construct(array $option)
     {
         parent::__construct($option);
+
         if (empty($this->option['clientId']) || empty($this->option['clientSecret'])) {
             throw new DefaultException('missing clientId or clientSecret');
         }

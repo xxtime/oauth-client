@@ -40,20 +40,27 @@ use Xxtime\Oauth\DefaultException;
 class Google extends ProviderAbstract
 {
 
-    /**
-     * @param string $id
-     * @param string $token
-     * @return array|bool
-     * @throws DefaultException
-     */
+
+    private $endpoint = 'https://www.googleapis.com/oauth2/v3';
+
+
+    public function __construct(array $option)
+    {
+        parent::__construct($option);
+
+        if (empty($this->option['clientId'])) {
+            throw new DefaultException('missing clientId');
+        }
+    }
+
+
     public function verify($id = '', $token = '')
     {
         if (!$id || !$token) {
             throw new DefaultException('missing argv');
         }
 
-
-        $url = 'https://www.googleapis.com/oauth2/v3/tokeninfo?id_token=' . $token;
+        $url = $this->endpoint . '/tokeninfo?id_token=' . $token;
         $payload = json_decode($this->http->get($url), true);
 
 
@@ -64,7 +71,7 @@ class Google extends ProviderAbstract
 
 
         // check aud
-        if (empty($this->option['clientId']) || ($this->option['clientId'] != $payload['aud'])) {
+        if ($this->option['clientId'] != $payload['aud']) {
             throw new DefaultException($payload['clientId error']);
         }
 
@@ -94,5 +101,6 @@ class Google extends ProviderAbstract
         ];
 
     }
+
 
 }
