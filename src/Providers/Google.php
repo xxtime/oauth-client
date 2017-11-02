@@ -64,7 +64,7 @@ class Google extends ProviderAbstract
 
 
         // check aud
-        if (isset($this->option['clientId']) && ($this->option['clientId'] != $payload['aud'])) {
+        if (empty($this->option['clientId']) || ($this->option['clientId'] != $payload['aud'])) {
             throw new DefaultException($payload['clientId error']);
         }
 
