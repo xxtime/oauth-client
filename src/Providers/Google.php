@@ -97,6 +97,7 @@ class Google extends ProviderAbstract
         return [
             'id'     => $payload['sub'],
             'name'   => $payload['name'],
+            'email'  => $payload['email'],
             'avatar' => $payload['picture'],
         ];
 
