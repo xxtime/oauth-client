@@ -71,7 +71,13 @@ class Google extends ProviderAbstract
 
 
         // check aud
-        if ($this->option['clientId'] != $payload['aud']) {
+        if (strpos($this->option['clientId'], '-') !== false) {
+            $clientId = substr($this->option['clientId'], 0, strpos($this->option['clientId'], '-'));
+        }
+        else {
+            $clientId = $this->option['clientId'];
+        }
+        if ($clientId != substr($payload['aud'], 0, strpos($payload['aud'], '-'))) {
             throw new DefaultException($payload['clientId error']);
         }
 
