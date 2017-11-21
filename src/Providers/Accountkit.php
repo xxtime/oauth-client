@@ -9,7 +9,7 @@ namespace Xxtime\Oauth\Providers;
 
 use Xxtime\Oauth\DefaultException;
 
-class AccountKit extends ProviderAbstract
+class Accountkit extends ProviderAbstract
 {
 
 
