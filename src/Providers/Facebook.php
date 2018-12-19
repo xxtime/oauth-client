@@ -32,7 +32,7 @@ class Facebook extends ProviderAbstract
 {
 
 
-    private $endpoint = 'https://graph.facebook.com/v2.10';
+    private $endpoint = 'https://graph.facebook.com/v3.2';
 
 
     public function __construct(array $option)
