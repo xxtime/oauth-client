@@ -13,7 +13,7 @@ class Accountkit extends ProviderAbstract
 {
 
 
-    private $endpoint = 'https://graph.accountkit.com/v1.2';
+    private $endpoint = 'https://graph.accountkit.com/v1.3';
 
 
     public function __construct(array $option)
