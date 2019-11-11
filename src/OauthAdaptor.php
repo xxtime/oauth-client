@@ -9,6 +9,7 @@
  *
  * @link http://www.ruanyifeng.com/blog/2014/05/oauth_2_0.html
  */
+
 namespace Xxtime\Oauth;
 
 
@@ -24,7 +25,7 @@ class OauthAdaptor
         if (!$adaptor) {
             throw new DefaultException('no adaptor');
         }
-        $class = "\\Xxtime\\Oauth\\Providers\\" . ucfirst($adaptor);
+        $class         = "\\Xxtime\\Oauth\\Providers\\" . ucfirst($adaptor);
         $this->adaptor = new $class($option);
     }
 
@@ -32,6 +33,16 @@ class OauthAdaptor
     public function verify($id = '', $token = '')
     {
         return $this->adaptor->verify($id, $token);
+    }
+
+    /**
+     * 1. getCode
+     * 2. getAccessToken
+     * @return mixed
+     */
+    public function oauth()
+    {
+        return $this->adaptor->oauth();
     }
 
 }
