@@ -30,19 +30,49 @@ class OauthAdaptor
     }
 
 
+    /**
+     * verify the token
+     * @param string $id
+     * @param string $token
+     * @return mixed
+     */
     public function verify($id = '', $token = '')
     {
+        if (!method_exists($this->adaptor, "verify")) {
+            throw new DefaultException("method is not found");
+        }
+
         return $this->adaptor->verify($id, $token);
     }
 
     /**
-     * 1. getCode
-     * 2. getAccessToken
+     * this will redirect
      * @return mixed
+     * @throws DefaultException
      */
-    public function oauth()
+    public function getCode()
     {
-        return $this->adaptor->oauth();
+        if (!method_exists($this->adaptor, "getCode")) {
+            throw new DefaultException("method is not found");
+        }
+
+        return $this->adaptor->getCode();
+    }
+
+
+    /**
+     * get access token
+     * @param string $code
+     * @return mixed
+     * @throws DefaultException
+     */
+    public function getAccessToken($code = '')
+    {
+        if (!method_exists($this->adaptor, "getAccessToken")) {
+            throw new DefaultException("method is not found");
+        }
+
+        return $this->adaptor->getAccessToken($code);
     }
 
 }

@@ -31,28 +31,11 @@ class Weibo extends ProviderAbstract
     }
 
 
-    public function oauth()
-    {
-        $code = isset($_GET["code"]) ? $_GET["code"] : null;
-        if (!$code) {
-            $this->getCode();
-            exit();
-        }
-
-        $response = $this->getAccessToken($code);
-        $result   = [
-            "accessToken" => $response["access_token"],
-            "expires"     => $response["expires_in"],
-            "uid"         => $response["uid"],
-        ];
-        return $result;
-    }
-
-
     /**
+     * request code, this will redirect
      * @see https://open.weibo.com/wiki/Oauth2/authorize
      */
-    private function getCode()
+    public function getCode()
     {
         $uri = "/oauth2/authorize";
 
@@ -84,8 +67,11 @@ class Weibo extends ProviderAbstract
      * @param string $code
      * @return mixed
      */
-    private function getAccessToken($code = "")
+    public function getAccessToken($code = "")
     {
+        if (!$code) {
+            throw new DefaultException("no code");
+        }
         $uri    = "/oauth2/access_token";
         $params = [
             "client_id"     => $this->option["clientId"],
@@ -94,9 +80,17 @@ class Weibo extends ProviderAbstract
             "code"          => $code,
             "redirect_uri"  => $this->option["redirect"],
         ];
+        $json   = $this->http->post($this->endpoint . $uri, $params);
+        $data   = json_decode($json, true);
+        if (isset($data["error_code"])) {
+            throw new DefaultException($data["error_description"]);
+        }
+        $result = [
+            "accessToken" => $data["access_token"],
+            "expires"     => $data["expires_in"],
+            "uid"         => $data["uid"],
+        ];
 
-        $response = $this->http->post($this->endpoint . $uri, $params);
-        $result   = json_decode($response, true);
         return $result;
     }
 
