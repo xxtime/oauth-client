@@ -88,7 +88,7 @@ class Weibo extends ProviderAbstract
         $result = [
             "accessToken" => $data["access_token"],
             "expires"     => $data["expires_in"],
-            "uid"         => $data["uid"],
+            "id"         => $data["uid"],
         ];
 
         return $result;
